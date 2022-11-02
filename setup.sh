@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # this script can be run from URL like this:
-# ssh ubuntu@192.168.64.14 'bash -s -- -p testpw -c' < "$(curl -fsSL https://raw.githubusercontent.com/canuto/test-jungle/master/setup.sh)"
+# ssh ubuntu@192.168.64.14 'bash  -s -- -p test' < <(curl -fsSL https://raw.githubusercontent.com/canuto/test-jungle/master/setup.sh)
 
 # Functions
 usage()
@@ -19,7 +19,7 @@ POSITIONAL_ARGS=()
 PASSWORD=
 LOGIN=
 
-echo $#
+hostnamectl 
 
 while [[ $# -gt 0 ]]; do
   case $1 in
