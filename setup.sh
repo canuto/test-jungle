@@ -3,7 +3,7 @@
 # Functions
 usage()
 {
-    echo "Usage: setup_device.sh [[-u user@machine -p NEW_PASSWORD | [-h]]"
+    echo "Usage: setup_device.sh [[-l LOGIN@MACHINE -p NEW_PASSWORD | [-h]]"
 }
 
 if [ -z $1 ]; then
@@ -12,23 +12,37 @@ if [ -z $1 ]; then
 fi
 
 # Parse script arguments
-new_password=
-login=
+POSITIONAL_ARGS=
+PASSWORD=
+LOGIN=
 
-while [ "$1" != "" ]; do
-    echo "param $1"
-    case $1 in
-        -p )                    shift
-                                new_password=$1
-                                ;;
-        -u )                    shift
-                                login=$1
-                                ;;
-        * )                     usage
-                                exit 1
-    esac
-    shift
+echo $#
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -p|--password)
+      PASSWORD="$2"
+      shift # past argument
+      shift # past value
+      ;;
+    -l|--login)
+      LOGIN="$2"
+      shift # past argument
+      shift # past value
+      ;;
+    -*|--*)
+      echo "Unknown option $1"
+      exit 1
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1") # save positional arg
+      shift # past argument
+      ;;
+  esac
 done
 
-echo "New password: $new_password"
-echo "Login: $login"
+set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
+
+echo "Password: $PASSWORD"
+echo "Login: $LOGIN"
+
