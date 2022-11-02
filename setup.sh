@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# this script can be run from URL like this:
+# ssh ubuntu@192.168.64.14 'bash -s -- -p testpw -c' < "$(curl -fsSL https://raw.githubusercontent.com/canuto/test-jungle/master/setup.sh)"
+
 # Functions
 usage()
 {
@@ -12,7 +15,7 @@ if [ -z $1 ]; then
 fi
 
 # Parse script arguments
-POSITIONAL_ARGS=
+POSITIONAL_ARGS=()
 PASSWORD=
 LOGIN=
 
@@ -44,5 +47,4 @@ done
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
 echo "Password: $PASSWORD"
-echo "Login: $LOGIN"
 
